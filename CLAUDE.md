@@ -51,7 +51,7 @@ ROADMAP.mdやCLAUDE.mdは編集してok
   - `src/index.ts` 作成（GET `/` / GET `/posts`）
   - oxlint / oxfmt / wrangler / @cloudflare/workers-types インストール済み
   - `pnpm wrangler dev` でローカル動作確認済み（http://localhost:8787）
-- Wrangler ログイン済み・Cloudflare Workers へデプロイ済み
+- Wrangler ログイン済み・Cloudflare Workers へデプロイ済み ✅
   - サブドメイン: `high-g.workers.dev`
   - デプロイ先: https://hono-api.high-g.workers.dev/
   - 動作確認済み（GET `/` / GET `/posts`）
