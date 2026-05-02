@@ -16,10 +16,12 @@ ROADMAP.mdやCLAUDE.mdは編集してok
 ### スタック
 
 - Hono（Cloudflare Workers 上で動かす）
+- Wrangler（Cloudflare の CLI）
 - Drizzle ORM（D1 / sqlite-core）
 - Cloudflare D1（SQLite 互換 DB）
 - Cloudflare Pages（Next.js のデプロイ先）
-- Wrangler（Cloudflare の CLI）
+- oxlint（linter、Rust 製）
+- oxfmt（formatter、Rust 製、Prettier 互換）
 
 ### 学習の流れ
 
@@ -37,62 +39,54 @@ ROADMAP.mdやCLAUDE.mdは編集してok
 
 ---
 
-## 現在の状況（Workers セットアップ開始）
+## 現在の状況
+
+### 完了済み
 
 - Cloudflare アカウント作成済み（Google アカウントで登録）
 - `cloudflare-workspace` リポジトリ作成・GitHub push 済み
-- Wrangler のインストール・ログインはまだ
+- `hono-api/` セットアップ完了
+  - `wrangler.toml` 作成（compatibility_date = "2026-05-02"）
+  - `tsconfig.json` 作成（target: ESNext、noEmit: true）
+  - `src/index.ts` 作成（GET `/` / GET `/posts`）
+  - oxlint / oxfmt / wrangler / @cloudflare/workers-types インストール済み
+  - `pnpm wrangler dev` でローカル動作確認済み（http://localhost:8787）
 
 ### 次にやること
 
-1. **pnpm 初期化 & Wrangler インストール**
+1. **Wrangler ログイン & Workers へデプロイ**
 
 ```bash
-pnpm init
-pnpm add -D wrangler
-pnpm wrangler login
+cd hono-api
+pnpm wrangler login   # ブラウザ認証
+pnpm wrangler deploy  # Cloudflare Workers へデプロイ
 ```
 
-2. **hono-api ディレクトリ作成・初期化**
+2. **D1 データベース作成**
 
 ```bash
-mkdir hono-api && cd hono-api
-pnpm init
-pnpm add hono
-pnpm add -D wrangler typescript
+pnpm wrangler d1 create hono-db
 ```
 
-3. **`wrangler.toml` 作成**
+3. **`wrangler.toml` に D1 バインディング追加**
 
 ```toml
-name = "hono-api"
-main = "src/index.ts"
-compatibility_date = "2024-01-01"
+[[d1_databases]]
+binding = "DB"
+database_name = "hono-db"
+database_id = "<作成時に表示されるID>"
 ```
 
-4. **`src/index.ts` を Workers 用に作成**
-
-```ts
-import { Hono } from 'hono'
-
-const app = new Hono()
-
-app.get('/', (c) => c.json({ message: 'Hello from Workers!' }))
-
-export default app
-```
-
-5. **ローカル動作確認**
+4. **Drizzle ORM セットアップ（sqlite-core）**
 
 ```bash
-pnpm wrangler dev
+pnpm add drizzle-orm
+pnpm add -D drizzle-kit
 ```
 
-6. **デプロイ**
+5. **スキーマ定義・マイグレーション・CRUD 実装**
 
-```bash
-pnpm wrangler deploy
-```
+6. **Next.js → Cloudflare Pages にデプロイ**
 
 ---
 
@@ -106,7 +100,9 @@ pnpm wrangler deploy
 | スキーマ           | `pg-core`                       | `sqlite-core`                                    |
 | エントリーポイント | `serve()` + `@hono/node-server` | `export default app`                             |
 | 環境変数           | `.env` / `dotenv`               | `wrangler.toml` の `[vars]` またはダッシュボード |
-| ポート             | 3001                            | Wrangler が自動割り当て                          |
+| ポート             | 3001                            | Wrangler が自動割り当て（デフォルト 8787）       |
+| linter             | ESLint                          | oxlint                                           |
+| formatter          | Prettier                        | oxfmt                                            |
 
 **Workers では Node.js の API（`fs` / `net` / TCP など）が使えない。**
 `pg` は TCP 接続なので Workers では動かない → D1 を使う。
@@ -132,3 +128,12 @@ Node.js の `http.createServer` に相当するものが Workers では `fetch` 
 
 **Cloudflare Pages**
 静的サイトおよび SSR アプリのホスティングサービス。Next.js は `@cloudflare/next-on-pages` を使ってデプロイする。Edge Runtime 制約（Node.js API 不可）があるため、既存コードが動かない箇所が出ることがある。Workers より後に取り組む。
+
+**oxlint**
+OXC プロジェクトが開発した Rust 製 linter。ESLint より大幅に高速。`oxlint src` で実行。
+
+**oxfmt**
+OXC プロジェクトが開発した Rust 製 formatter。Prettier 互換で約30倍高速。`oxfmt` で実行、`oxfmt --check` でチェックのみ。
+
+**compatibility_date**
+`wrangler.toml` に記載する Workers ランタイムのバージョン固定設定。その日付時点の挙動が保証される。プロジェクト作成日を設定するのが一般的。
