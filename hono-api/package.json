@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "w": "wrangler",
+    "d": "drizzle-kit",
     "lint": "oxlint src/**/*.ts",
     "format": "oxfmt src/**/*.ts --write"
   },
