@@ -51,24 +51,21 @@ ROADMAP.mdやCLAUDE.mdは編集してok
   - `src/index.ts` 作成（GET `/` / GET `/posts`）
   - oxlint / oxfmt / wrangler / @cloudflare/workers-types インストール済み
   - `pnpm wrangler dev` でローカル動作確認済み（http://localhost:8787）
+- Wrangler ログイン済み・Cloudflare Workers へデプロイ済み
+  - サブドメイン: `high-g.workers.dev`
+  - デプロイ先: https://hono-api.high-g.workers.dev/
+  - 動作確認済み（GET `/` / GET `/posts`）
 
 ### 次にやること
 
-1. **Wrangler ログイン & Workers へデプロイ**
+1. **D1 データベース作成**
 
 ```bash
 cd hono-api
-pnpm wrangler login   # ブラウザ認証
-pnpm wrangler deploy  # Cloudflare Workers へデプロイ
-```
-
-2. **D1 データベース作成**
-
-```bash
 pnpm wrangler d1 create hono-db
 ```
 
-3. **`wrangler.toml` に D1 バインディング追加**
+2. **`wrangler.toml` に D1 バインディング追加**
 
 ```toml
 [[d1_databases]]
@@ -77,16 +74,16 @@ database_name = "hono-db"
 database_id = "<作成時に表示されるID>"
 ```
 
-4. **Drizzle ORM セットアップ（sqlite-core）**
+3. **Drizzle ORM セットアップ（sqlite-core）**
 
 ```bash
 pnpm add drizzle-orm
 pnpm add -D drizzle-kit
 ```
 
-5. **スキーマ定義・マイグレーション・CRUD 実装**
+4. **スキーマ定義・マイグレーション・CRUD 実装**
 
-6. **Next.js → Cloudflare Pages にデプロイ**
+5. **Next.js → Cloudflare Pages にデプロイ**
 
 ---
 

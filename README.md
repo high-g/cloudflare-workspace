@@ -26,6 +26,12 @@ cloudflare-workspace/
     └── package.json
 ```
 
+## デプロイ済み
+
+| サービス | URL |
+|----------|-----|
+| hono-api (Workers) | https://hono-api.high-g.workers.dev/ |
+
 ## 開発
 
 ```bash
@@ -33,6 +39,7 @@ cd hono-api
 pnpm wrangler dev   # ローカル開発サーバー → http://localhost:8787
 pnpm lint           # oxlint
 pnpm fmt            # oxfmt
+pnpm wrangler deploy  # Cloudflare Workers へデプロイ
 ```
 
 ## 関連リポジトリ
