@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "wd": "wrangler dev",
+    "lint": "oxlint src/**/*.ts",
+    "format": "oxfmt src/**/*.ts --write"
   },
   "keywords": [],
   "author": "",
