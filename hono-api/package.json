@@ -12,5 +12,10 @@
   "packageManager": "pnpm@10.32.1",
   "dependencies": {
     "hono": "^4.12.16"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20260502.1",
+    "typescript": "^6.0.3",
+    "wrangler": "^4.87.0"
   }
 }
