@@ -65,31 +65,27 @@ ROADMAP.mdやCLAUDE.mdは編集してok
   - CRUD 実装済み（GET `/posts` / POST `/posts`）
   - ローカル・本番どちらも動作確認済み
 
-- `nextjs-app/` 作成完了（Next.js 16.2.4 / React 19.2.4 / Tailwind CSS v4）
+- `nextjs-app/` 作成・デプロイ完了（Next.js 16.2.4 / React 19.2.4 / Tailwind CSS v4）
   - oxlint / oxfmt インストール済み
-  - TypeScript 対応済み
+  - OpenNext（`@opennextjs/cloudflare`）でビルド・デプロイ済み
+  - デプロイ先: https://nextjs-app.high-g.workers.dev
+  - ローカルプレビュー確認済み（`pnpm preview` → http://localhost:8788）
 
 ### 次にやること
 
-1. **OpenNext で Cloudflare Pages 対応**
+App Router の主要機能を実装する。
+
+1. **Route Handlers** — `app/api/posts/route.ts` を作成し hono-api に繋ぐ
+
+2. **Server Components** — `app/posts/page.tsx` でサーバー側から posts 一覧を取得・描画
+
+3. **Server Actions** — 投稿フォームから `"use server"` 関数でPOST処理
+
+4. **デプロイ確認**
 
 ```bash
 cd nextjs-app
-pnpm dlx @opennextjs/cloudflare migrate
-```
-
-2. **`wrangler.jsonc` に Pages 用設定を追記**（migrate コマンドが自動生成）
-
-3. **ローカルプレビュー確認**
-
-```bash
-pnpm preview
-```
-
-4. **Cloudflare Pages へデプロイ**
-
-```bash
-pnpm deploy
+pnpm run deploy
 ```
 
 ---
