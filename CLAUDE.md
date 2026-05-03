@@ -118,3 +118,17 @@ OXC プロジェクトが開発した Rust 製 formatter。Prettier 互換で約
 
 **compatibility_date**
 `wrangler.toml` に記載する Workers ランタイムのバージョン固定設定。その日付時点の挙動が保証される。プロジェクト作成日を設定するのが一般的。
+
+---
+
+## 参考ドキュメント
+
+- Cloudflare Workers: https://developers.cloudflare.com/workers/
+- Cloudflare D1: https://developers.cloudflare.com/d1/
+- Cloudflare Pages: https://developers.cloudflare.com/pages/
+- Wrangler: https://developers.cloudflare.com/workers/wrangler/
+- Hono: https://hono.dev/docs
+- Drizzle ORM（D1）: https://orm.drizzle.team/docs/get-started/d1-new
+- OpenNext（Cloudflare Pages）: https://opennext.js.org/cloudflare
+- oxlint: https://oxc.rs/docs/guide/usage/linter.html
+- oxfmt: https://oxc.rs/docs/guide/usage/formatter.html
