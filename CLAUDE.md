@@ -65,9 +65,32 @@ ROADMAP.mdやCLAUDE.mdは編集してok
   - CRUD 実装済み（GET `/posts` / POST `/posts`）
   - ローカル・本番どちらも動作確認済み
 
+- `nextjs-app/` 作成完了（Next.js 16.2.4 / React 19.2.4 / Tailwind CSS v4）
+  - oxlint / oxfmt インストール済み
+  - TypeScript 対応済み
+
 ### 次にやること
 
-1. **Next.js → Cloudflare Pages にデプロイ**
+1. **OpenNext で Cloudflare Pages 対応**
+
+```bash
+cd nextjs-app
+pnpm dlx @opennextjs/cloudflare migrate
+```
+
+2. **`wrangler.jsonc` に Pages 用設定を追記**（migrate コマンドが自動生成）
+
+3. **ローカルプレビュー確認**
+
+```bash
+pnpm preview
+```
+
+4. **Cloudflare Pages へデプロイ**
+
+```bash
+pnpm deploy
+```
 
 ---
 
@@ -108,7 +131,7 @@ Workers が外部リソース（D1 / KV / R2 など）にアクセスするた�
 Node.js の `http.createServer` に相当するものが Workers では `fetch` ハンドラー。Hono は `app.fetch` を持つため `export default app` でそのままエントリーポイントになる。
 
 **Cloudflare Pages**
-静的サイトおよび SSR アプリのホスティングサービス。Next.js は `@cloudflare/next-on-pages` を使ってデプロイする。Edge Runtime 制約（Node.js API 不可）があるため、既存コードが動かない箇所が出ることがある。Workers より後に取り組む。
+静的サイトおよび SSR アプリのホスティングサービス。Next.js は `@opennextjs/cloudflare`（OpenNext）を使ってデプロイする。`export const runtime = 'edge'` が不要で既存コードをそのまま動かせる。`pnpm dlx @opennextjs/cloudflare migrate` で自動セットアップ。
 
 **oxlint**
 OXC プロジェクトが開発した Rust 製 linter。ESLint より大幅に高速。`oxlint src` で実行。
