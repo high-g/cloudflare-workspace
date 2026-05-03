@@ -8,8 +8,8 @@ Cloudflare Workers / D1 / Pages の学習用リポジトリ。
 |--------|------|
 | [Hono](https://hono.dev) | Cloudflare Workers 上で動かす API フレームワーク |
 | [Wrangler](https://developers.cloudflare.com/workers/wrangler/) | Cloudflare CLI（dev / deploy / D1 操作） |
-| [Drizzle ORM](https://orm.drizzle.team) | D1 / sqlite-core（予定） |
-| [Cloudflare D1](https://developers.cloudflare.com/d1/) | SQLite 互換 DB（予定） |
+| [Drizzle ORM](https://orm.drizzle.team) | D1 / sqlite-core |
+| [Cloudflare D1](https://developers.cloudflare.com/d1/) | SQLite 互換 DB |
 | [Cloudflare Pages](https://pages.cloudflare.com) | Next.js デプロイ先（予定） |
 | [oxlint](https://oxc.rs/docs/guide/usage/linter.html) | linter（Rust 製、高速） |
 | [oxfmt](https://oxc.rs/docs/guide/usage/formatter.html) | formatter（Rust 製、Prettier 互換） |
