@@ -48,42 +48,26 @@ ROADMAP.mdやCLAUDE.mdは編集してok
 - `hono-api/` セットアップ完了
   - `wrangler.toml` 作成（compatibility_date = "2026-05-02"）
   - `tsconfig.json` 作成（target: ESNext、noEmit: true）
-  - `src/index.ts` 作成（GET `/` / GET `/posts`）
   - oxlint / oxfmt / wrangler / @cloudflare/workers-types インストール済み
   - `pnpm wrangler dev` でローカル動作確認済み（http://localhost:8787）
-- Wrangler ログイン済み・Cloudflare Workers へデプロイ済み ✅
+- Wrangler ログイン済み・Cloudflare Workers へデプロイ済み
   - サブドメイン: `high-g.workers.dev`
   - デプロイ先: https://hono-api.high-g.workers.dev/
   - 動作確認済み（GET `/` / GET `/posts`）
+- Cloudflare D1 との連携完了
+  - D1 データベース作成済み（`hono-db`、APAC リージョン）
+  - `wrangler.toml` に D1 バインディング追加（`binding = "DB"`）
+  - Drizzle ORM + drizzle-kit インストール済み
+  - `src/db/schema.ts` 作成（posts テーブル: id / title / content）
+  - `drizzle.config.ts` 作成（dialect: sqlite）
+  - `src/db/index.ts` 作成（`createDb` 関数）
+  - マイグレーション生成・ローカル & 本番 D1 に適用済み
+  - CRUD 実装済み（GET `/posts` / POST `/posts`）
+  - ローカル・本番どちらも動作確認済み
 
 ### 次にやること
 
-1. **D1 データベース作成**
-
-```bash
-cd hono-api
-pnpm wrangler d1 create hono-db
-```
-
-2. **`wrangler.toml` に D1 バインディング追加**
-
-```toml
-[[d1_databases]]
-binding = "DB"
-database_name = "hono-db"
-database_id = "<作成時に表示されるID>"
-```
-
-3. **Drizzle ORM セットアップ（sqlite-core）**
-
-```bash
-pnpm add drizzle-orm
-pnpm add -D drizzle-kit
-```
-
-4. **スキーマ定義・マイグレーション・CRUD 実装**
-
-5. **Next.js → Cloudflare Pages にデプロイ**
+1. **Next.js → Cloudflare Pages にデプロイ**
 
 ---
 

@@ -18,9 +18,15 @@ Cloudflare Workers / D1 / Pages の学習用リポジトリ。
 
 ```
 cloudflare-workspace/
-└── hono-api/        # Cloudflare Workers + Hono API
+└── hono-api/                  # Cloudflare Workers + Hono API
     ├── src/
-    │   └── index.ts
+    │   ├── index.ts           # ルート定義（GET / POST /posts）
+    │   └── db/
+    │       ├── index.ts       # Drizzle クライアント初期化
+    │       └── schema.ts      # posts テーブルスキーマ
+    ├── drizzle/
+    │   └── migrations/        # マイグレーション SQL
+    ├── drizzle.config.ts
     ├── wrangler.toml
     ├── tsconfig.json
     └── package.json
