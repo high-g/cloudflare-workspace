@@ -3,7 +3,7 @@ main = "src/index.ts"
 compatibility_date = "2026-05-02"
 
 [[d1_databases]]
-binding = "hono_db"
+binding = "DB"
 database_name = "hono-db"
 database_id = "1ff740ac-3fe8-4252-9f92-b1b3c384313c"
 migrations_dir = 'drizzle/migrations'
