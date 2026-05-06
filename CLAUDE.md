@@ -71,22 +71,23 @@ ROADMAP.mdやCLAUDE.mdは編集してok
   - デプロイ先: https://nextjs-app.high-g.workers.dev
   - ローカルプレビュー確認済み（`pnpm preview` → http://localhost:8788）
 
+- pnpm workspace + concurrently によるモノレポ化完了
+  - ルートに `pnpm-workspace.yaml` 作成（`hono-api` / `nextjs-app`）
+  - `concurrently` インストール済み（ルートの devDependencies）
+  - ルートの `pnpm dev` で hono-api + nextjs-app を同時起動できる
+  - ルートにデプロイスクリプト追加（`deploy:hono-api` / `deploy:nextjs-app` / `deploy:both`）
+
+- App Router の主要機能実装・デプロイ確認完了
+  - Route Handlers: `app/api/posts/route.ts`（hono-api へのプロキシ）
+  - Server Components: `app/posts/page.tsx`（hono-api から posts 一覧を取得・描画）
+  - Server Actions: `app/posts/action.ts`（フォームから POST、`revalidatePath` でキャッシュ破棄）
+  - `src/lib/api.ts` に `postJson` ヘルパー作成
+  - `wrangler.jsonc` の `vars` に `HONO_API_URL` 設定
+  - 本番（https://nextjs-app.high-g.workers.dev/posts）で動作確認済み
+
 ### 次にやること
 
-App Router の主要機能を実装する。
-
-1. **Route Handlers** — `app/api/posts/route.ts` を作成し hono-api に繋ぐ
-
-2. **Server Components** — `app/posts/page.tsx` でサーバー側から posts 一覧を取得・描画
-
-3. **Server Actions** — 投稿フォームから `"use server"` 関数でPOST処理
-
-4. **デプロイ確認**
-
-```bash
-cd nextjs-app
-pnpm run deploy
-```
+Phase 6 完了。次は Phase 7: AWS Lambda + API Gateway（`lambda-workspace` リポジトリ）。
 
 ---
 

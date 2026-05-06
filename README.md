@@ -20,6 +20,8 @@ Cloudflare Workers / D1 / Pages の学習用リポジトリ。
 
 ```
 cloudflare-workspace/
+├── pnpm-workspace.yaml        # モノレポ設定
+├── package.json               # ルートスクリプト（dev / deploy）
 ├── hono-api/                  # Cloudflare Workers + Hono API
 │   ├── src/
 │   │   ├── index.ts           # ルート定義（GET / POST /posts）
@@ -32,8 +34,18 @@ cloudflare-workspace/
 │   ├── wrangler.toml
 │   ├── tsconfig.json
 │   └── package.json
-└── nextjs-app/                # Cloudflare Pages + Next.js 16.2
-    ├── src/app/
+└── nextjs-app/                # Cloudflare Workers + Next.js 16.2（OpenNext）
+    ├── src/
+    │   ├── app/
+    │   │   ├── api/posts/route.ts  # Route Handler（hono-api プロキシ）
+    │   │   ├── posts/
+    │   │   │   ├── page.tsx        # Server Component（posts 一覧）
+    │   │   │   └── action.ts       # Server Action（POST 処理）
+    │   │   ├── layout.tsx
+    │   │   └── page.tsx
+    │   └── lib/
+    │       └── api.ts              # fetch ヘルパー（postJson）
+    ├── wrangler.jsonc
     ├── next.config.ts
     ├── tsconfig.json
     └── package.json
@@ -44,15 +56,22 @@ cloudflare-workspace/
 | サービス | URL |
 |----------|-----|
 | hono-api (Workers) | https://hono-api.high-g.workers.dev/ |
+| nextjs-app (Workers) | https://nextjs-app.high-g.workers.dev/ |
 
 ## 開発
 
 ```bash
-cd hono-api
-pnpm wrangler dev   # ローカル開発サーバー → http://localhost:8787
-pnpm lint           # oxlint
-pnpm fmt            # oxfmt
-pnpm wrangler deploy  # Cloudflare Workers へデプロイ
+# ルートから一括起動
+pnpm dev   # hono-api（:8787）+ nextjs-app（:3000）を同時起動
+
+# 個別起動
+pnpm --filter hono-api dev
+pnpm --filter nextjs-app dev
+
+# デプロイ
+pnpm run deploy:hono-api
+pnpm run deploy:nextjs-app
+pnpm run deploy:both   # 両方同時デプロイ
 ```
 
 ## 関連リポジトリ
