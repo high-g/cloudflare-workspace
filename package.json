@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "concurrently \"pnpm --filter hono-api dev\" \"pnpm --filter nextjs-app dev\""
+    "dev": "concurrently \"pnpm --filter hono-api dev\" \"pnpm --filter nextjs-app dev\"",
+    "deploy:nextjs-app": "pnpm --filter nextjs-app run deploy",
+    "deploy:hono-api": "pnpm --filter hono-api run deploy",
+    "deploy:both": "concurrently \"pnpm --filter hono-api run deploy\" \"pnpm --filter nextjs-app run deploy\""
   },
   "keywords": [],
   "author": "",
