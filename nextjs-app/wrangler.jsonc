@@ -20,5 +20,8 @@
     // Enable image optimization
     // see https://opennext.js.org/cloudflare/howtos/image
     "binding": "IMAGES"
+  },
+  "vars": {
+    "HONO_API_URL": "https://hono-api.tanifumiya.workers.dev"
   }
 }
