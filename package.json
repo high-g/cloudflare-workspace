@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "wd": "wrangler dev"
+    "dev": "concurrently \"pnpm --filter hono-api dev\" \"pnpm --filter nextjs-app dev\""
   },
   "keywords": [],
   "author": "",
@@ -12,5 +12,8 @@
   "packageManager": "pnpm@10.32.1",
   "devDependencies": {
     "@biomejs/biome": "^2.4.14"
+  },
+  "dependencies": {
+    "concurrently": "^9.2.1"
   }
 }
