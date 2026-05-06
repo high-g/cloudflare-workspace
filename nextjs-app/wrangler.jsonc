@@ -22,6 +22,6 @@
     "binding": "IMAGES"
   },
   "vars": {
-    "HONO_API_URL": "https://hono-api.tanifumiya.workers.dev"
+    "HONO_API_URL": "https://hono-api.high-g.workers.dev"
   }
 }
